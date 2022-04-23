@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: div-ui
+  namespace: div-ui
+spec:
+  selector:
+    matchLabels:
+      app: div-ui
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: div-ui
+    spec:
+      containers:
+        - name: div-ui
+          image: 319974114723.dkr.ecr.ap-south-1.amazonaws.com/ms-div-ui:TAGNAME
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 3000
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: div-ui
+  namespace: div-ui
+spec:
+  selector:
+    app: div-ui
+  ports:
+    - protocol: TCP
+      port: 3000
+      targetPort: 3000
